@@ -32,11 +32,6 @@ conda activate gpuenv
 - Ensure that the versions of your dependencies are compatible with each other, especially TensorFlow, Keras, and the GPU drivers.
 
 ## Running the Code
-To run the experiments, use the following commands:
-
-```bash
-# Insert specific instructions on how to run your code
-```
 
 ## Citation
 If you find this work useful, please cite our paper:
