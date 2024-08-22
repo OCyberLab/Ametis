@@ -18,45 +18,13 @@ To replicate the environment used in this project, use the following Conda envir
 Create the environment using the following command:
 
 ```bash
-conda env create -f gpuenv.yml
+conda env create -f environment.yml
 ```
 
 Activate the environment:
 
 ```bash
 conda activate gpuenv
-```
-
-### `gpuenv.yml`
-This is the content of the `gpuenv.yml` file:
-
-```yaml
-name: gpuenv
-channels:
-  - defaults
-dependencies:
-  - python=3.11.5
-  - pip
-  - pip:
-    - imbalanced-learn==0.10.1
-    - keras
-    - keras-tuner
-    - matplotlib
-    - numpy  # Consider specifying a version  
-    - oauthlib==3.2.2
-    - opt-einsum==3.3.0
-    - packaging==23.1
-    - pandas
-    - scikit-learn==1.2.0
-    - scipy
-    - tensorflow-macos
-    - tensorflow-metal
-    - data-complexity
-    - xgboost
-    - prompt_toolkit
-    - mlxtend
-    - boruta
-    - skrebate
 ```
 
 **Notes:**
@@ -83,8 +51,5 @@ If you find this work useful, please cite our paper:
 }
 ```
 
-## License
-[Insert any relevant licensing information]
-
 ## Contact
-For any inquiries or issues, please contact [Your Email].
+For any inquiries or issues, please contact alirezatoghyiani@gmail.com.
