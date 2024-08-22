@@ -1,5 +1,5 @@
 
-# Thesis Source Code - README
+# README
 
 ## Overview
 This repository contains the source code accompanying the paper titled: **An Empirical Study on Learning Models and Data Augmentation for IoT Anomaly Detection**.
