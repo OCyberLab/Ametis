@@ -12,7 +12,7 @@ To run the feature selection experiment for the IoT-23 dataset, use the `feature
 
 Command:
 ```bash
-python feature_selection_exp.py
+python feature_selection_exp.py --train_dataset datasets/IoT23/train.csv --test_dataset datasets/IoT23/test.csv --output results_iot23.csv
 ```
 
 ### CIC Dataset
@@ -20,7 +20,7 @@ To run the feature selection experiment for the CICIoT2023 dataset, use the `fea
 
 Command:
 ```bash
-python feature_selection_exp_CIC.py
+python feature_selection_exp_CIC.py --train_dataset datasets/CIC/train.csv --test_dataset datasets/CIC/test.csv --output results_cic.csv
 ```
 
 These scripts will automatically load the corresponding dataset, perform the necessary preprocessing, and execute the feature selection experiment to evaluate the impact on model performance.
@@ -34,7 +34,7 @@ Use the `Bert_FS.py` script for running the BERT-based feature selection experim
 
 Command:
 ```bash
-python Bert_FS.py
+python Bert_FS.py --train_dataset datasets/IoT23/train.csv --test_dataset datasets/IoT23/test.csv --output results_bert_iot23.csv
 ```
 
 ### CIC Dataset with BERT
@@ -42,7 +42,7 @@ Use the `Bert_FS_CIC.py` script for running the BERT-based feature selection exp
 
 Command:
 ```bash
-python Bert_FS_CIC.py
+python Bert_FS_CIC.py --train_dataset datasets/CIC/train.csv --test_dataset datasets/CIC/test.csv --output results_bert_cic.csv
 ```
 
 ## 3. Adapting the Framework to a New Dataset
