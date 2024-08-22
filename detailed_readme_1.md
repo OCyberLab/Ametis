@@ -15,7 +15,7 @@ Command:
 python feature_selection_exp.py
 ```
 
-### CICIoT2023 Dataset
+### CIC Dataset
 To run the feature selection experiment for the CICIoT2023 dataset, use the `feature_selection_exp_CIC.py` script. Ensure that the CICIoT2023 dataset is located in the `datasets/CIC/` folder.
 
 Command:
@@ -37,7 +37,7 @@ Command:
 python Bert_FS.py
 ```
 
-### CICIoT2023 Dataset with BERT
+### CIC Dataset with BERT
 Use the `Bert_FS_CIC.py` script for running the BERT-based feature selection experiment on the CICIoT2023 dataset.
 
 Command:
