@@ -31,7 +31,8 @@ conda activate gpuenv
 - If you are using a GPU that supports CUDA, consider switching to `tensorflow-gpu` instead of `tensorflow-macos` and `tensorflow-metal`.
 - Ensure that the versions of your dependencies are compatible with each other, especially TensorFlow, Keras, and the GPU drivers.
 
-## Running the Code
+## Running the Experiment: Best Features and Models Selection
+For detailed instructions on running the experiments and adapting the framework for new datasets, please refer to the [Detailed README 1](detailed_readme_1.md).
 
 ## Citation
 If you find this work useful, please cite our paper:
