@@ -3,9 +3,9 @@
 
 This section provides detailed instructions on how to execute the "Best Features and Models Selection" experiment using the provided code and datasets. Additionally, guidance is provided for adapting the code to new datasets.
 
-## 1. Running the Experiment on IoT-23 and CICIoT2023 Datasets
+## 1. Running the Experiment on IoT-23 and CIC Datasets
 
-The repository includes scripts to perform feature selection experiments on the IoT-23 and CICIoT2023 datasets. The process of running these experiments involves selecting the best combinations of features and models, along with necessary preprocessing steps.
+The repository includes scripts to perform feature selection experiments on the IoT-23 and CIC datasets. The process of running these experiments involves selecting the best combinations of features and models, along with necessary preprocessing steps.
 
 ### IoT-23 Dataset
 To run the feature selection experiment for the IoT-23 dataset, use the `feature_selection_exp.py` script. Ensure that the IoT-23 dataset is available in the `datasets/IoT23/` folder. This dataset will be split into training and test sets for evaluation.
@@ -16,7 +16,7 @@ python feature_selection_exp.py --train_dataset datasets/IoT23/train.csv --test_
 ```
 
 ### CIC Dataset
-To run the feature selection experiment for the CICIoT2023 dataset, use the `feature_selection_exp_CIC.py` script. Ensure that the CICIoT2023 dataset is located in the `datasets/CIC/` folder.
+To run the feature selection experiment for the CIC dataset, use the `feature_selection_exp_CIC.py` script. Ensure that the CIC dataset is located in the `datasets/CIC/` folder.
 
 Command:
 ```bash
@@ -38,7 +38,7 @@ python Bert_FS.py --train_dataset datasets/IoT23/train.csv --test_dataset datase
 ```
 
 ### CIC Dataset with BERT
-Use the `Bert_FS_CIC.py` script for running the BERT-based feature selection experiment on the CICIoT2023 dataset.
+Use the `Bert_FS_CIC.py` script for running the BERT-based feature selection experiment on the CIC dataset.
 
 Command:
 ```bash
