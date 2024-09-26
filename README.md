@@ -50,6 +50,6 @@ If you find this work useful, please cite our paper:
 ## Contact
 For any inquiries or issues, please contact:
 
-Email: [alirezatoghyiani@gmail.com](mailto:alirezatoghyiani@gmail.com)
-GitHub: [alireza12t](https://github.com/alireza12t)
+- Email: [alirezatoghyiani@gmail.com](mailto:alirezatoghyiani@gmail.com)
+- GitHub: [alireza12t](https://github.com/alireza12t)
 
