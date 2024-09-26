@@ -56,12 +56,12 @@ for scenario in ["S0", "S1" , "S2", "S3", "S4", "S5", "S7", "S6", "S8", "S9"]:
   if scenario in ["S0", "S2", "S5", "S7"]:
     feature_selection_list = ["NO FS"]
   else:
-    feature_selection_list = ["PCA", "RF", "trank", "MI", "Chi2", "L1", "L2", "SelectKBest", "PSO"]#"Boruta" # "Hera", "Anobis", "PCA2", "Hades", "Horus 3", "Horus 4", "Horus 5", "Horus 2", "Horus", "Persus", "Atena", "Horus 3", "Atena", 
+    feature_selection_list = ["PCA", "RF", "trank", "MI", "Chi2", "L1", "L2", "SelectKBest", "PSO"]
 
   if scenario in ["S5", "S6", "S7", "S8", "S9"]:
-    model_list = ["CNN_HT"] # "XGBoost_HT", "IF_HT", "AE_HT", "NN"]
+    model_list = ["CNN_HT", "XGBoost_HT", "IF_HT", "AE_HT", "NN_HT"]
   else:
-    model_list = ["CNN"] #IF", "XGBoost", "AE", "NN"]# ["XGBoost", "AE", "NN", "IF"]
+    model_list = ["CNN", "XGBoost", "IF", "AE", "NN"]
 
   print_green("-----------------------------")
   print_green(scenario)
