@@ -420,6 +420,57 @@ class AutoEncoderModel:
         autoencoder.compile(optimizer=self.optimizer_choice, loss=self.loss_choice)
         return autoencoder
 
+from tensorflow.keras.optimizers import Adam, RMSprop, SGD
+
+class HCSHyperModel:
+    def __init__(self, input_dim, hp, reg_type=""):
+        self.input_dim = input_dim
+        self.hp = hp
+        self.reg_type = reg_type
+
+    def build(self):
+        model = Sequential()
+
+        # Hyperparameters
+        units = self.hp.Int('units', min_value=32, max_value=512, step=32)
+        dropout_rate = self.hp.Float('dropout_rate', min_value=0.1, max_value=0.7, step=0.1)
+        learning_rate = self.hp.Float('learning_rate', min_value=1e-5, max_value=1e-2, sampling='log')
+        reg_strength = self.hp.Float('reg_strength', min_value=1e-6, max_value=1e-2, sampling='log')
+        optimizer_choice = self.hp.Choice('optimizer', ['adam', 'rmsprop', 'sgd'])
+
+        # Apply regularization conditionally
+        if self.reg_type == 'L1':
+            regularizer = l1(reg_strength)
+        elif self.reg_type == 'L2':
+            regularizer = l2(reg_strength)
+        else:
+            regularizer = None  # No regularization
+
+        # Build the model layers with the selected hyperparameters
+        model.add(Dense(units=units, activation='selu', kernel_initializer='lecun_normal',
+                        kernel_regularizer=regularizer, input_dim=self.input_dim))
+        model.add(BatchNormalization())
+        model.add(Dropout(dropout_rate))
+        model.add(Dense(units=units, activation='selu', kernel_initializer='lecun_normal',
+                        kernel_regularizer=regularizer))
+        model.add(BatchNormalization())
+        model.add(Dropout(dropout_rate))
+        model.add(Dense(1, activation='sigmoid', kernel_regularizer=regularizer))
+
+        # Select optimizer based on choice
+        if optimizer_choice == 'adam':
+            optimizer = Adam(learning_rate=learning_rate)
+        elif optimizer_choice == 'rmsprop':
+            optimizer = RMSprop(learning_rate=learning_rate)
+        elif optimizer_choice == 'sgd':
+            optimizer = SGD(learning_rate=learning_rate)
+        else:
+            optimizer = Adam(learning_rate=learning_rate)  # Default optimizer
+
+        model.compile(optimizer=optimizer, loss="binary_crossentropy")
+
+        return model
+
 
 class HCSModel:
     def __init__(self, input_dim, units=128, learning_rate=1e-4, reg_type="", reg_strength=1e-4):
@@ -692,7 +743,7 @@ def train_model_with_model_return(model_name, x, y, x_test, y_test, train_datase
 
       # Best model
       model = grid_search.best_estimator_
-    elif model_name == "CNN":
+    elif model_name == "CNN" or model_name == "CNN_HT":
         number_of_features = x.shape[1]
         print(f"Number of features in train: {number_of_features}")
         x_train_reshaped = x.reshape(x.shape[0], x.shape[1], 1)
@@ -735,9 +786,6 @@ def train_model_with_model_return(model_name, x, y, x_test, y_test, train_datase
         monitor_val_accuracy = EarlyStopping(monitor='val_accuracy', patience=2)
     
         model.fit(x_train_reshaped, y, validation_data=(x_test_reshaped, y_test), epochs=200, callbacks=[monitor_val_accuracy])
-
-    elif model_name == "CNN_HT":
-        model = None
     elif model_name == "NN":
       print_green(f"Train NN model with {feature_selection_method}")
       class_weights = {0: 1. / len(y[y == 0]), 1: 1. / len(y[y == 1])}
@@ -752,7 +800,40 @@ def train_model_with_model_return(model_name, x, y, x_test, y_test, train_datase
       else:
         model = HCSModel(input_dim).build()
       model.fit(x, y, epochs=epochs, validation_split=0.2, callbacks=[monitor], class_weight=class_weights)
+    elif model_name == "NN_HT":
+        print_green(f"Train NN_HT model with {feature_selection_method}")
+        input_dim = x.shape[1]
 
+        def hypermodel_builder(hp):
+            # Select regularization based on feature selection method if desired
+            reg_choice = None  # Default to no regularization
+            if feature_selection_method == "L1":
+                reg_choice = 'L1'
+            elif feature_selection_method == "L2":
+                reg_choice = 'L2'
+
+            model = HCSHyperModel(input_dim, hp, reg_type=reg_choice).build()
+            return model
+
+        # Create a RandomSearch tuner
+        tuner = kt.RandomSearch(
+            hypermodel_builder,
+            objective='val_loss',
+            max_trials=10,
+            directory='my_dir',
+            project_name='nn_tuning' + scenario + feature_selection_method
+        )
+
+        monitor = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='min', restore_best_weights=True)
+        tuner.search(x, y, epochs=epochs, validation_split=0.2, callbacks=[monitor])
+
+        # Get the optimal hyperparameters
+        best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
+
+        # Build the model with the best hyperparameters
+        model = tuner.hypermodel.build(best_hps)
+        class_weights = {0: 1. / len(y[y == 0]), 1: 1. / len(y[y == 1])}
+        model.fit(x, y, epochs=epochs, validation_split=0.2, callbacks=[monitor], class_weight=class_weights)
     elif model_name == "IF":
       # Adjust these parameters based on experimentation
       n_estimators = 100  # Increased from 50
