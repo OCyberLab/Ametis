@@ -43,16 +43,16 @@ else:
     df = pd.DataFrame(columns=column_names)
     df.to_csv(csv_path, index=False)
 
-for scenario in ["S1", "S0"]:#, "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"]:
+for scenario in ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"]:
   if scenario in ["S0", "S2", "S5", "S7"]:
     feature_selection_list = ["NO FS"]
   else:
-    feature_selection_list = ["trank", "PCA", "RF", "PSO", "MI", "Chi2", "L1", "L2", "SelectKBest"] # "Hera", "Anobis", "PCA2", "Hades", "Horus 3", "Horus 4", "Horus 5", "Horus 2", "Horus", "Persus", "Atena",
+    feature_selection_list = ["trank", "PCA", "RF", "PSO", "MI", "Chi2", "L1", "L2", "SelectKBest"] \
 
   if scenario in ["S5", "S6", "S7", "S8", "S9"]:
-    model_list = []#"XGBoost_HT", "IF_HT", "AE_HT", "CNN_HT"] # "NN"
+    model_list = ["XGBoost_HT", "IF_HT", "AE_HT", "CNN_HT", "NN_HT"]
   else:
-    model_list = ["IF"] #, "CNN", "XGBoost", "AE", "NN"]
+    model_list = ["XGBoost", "IF", "AE", "CNN", "NN"]
 
   print_green("-----------------------------")
   print_green(scenario)
